@@ -20,11 +20,9 @@ class CurrencyConverterController extends GetxController {
     super.onInit();
     fetchCurrencies();
 
-    // Listen for changes in baseAmount and selectedCurrency
     ever(baseAmount, (_) => convertCurrency());
     ever(selectedCurrency, (_) => convertCurrency());
 
-    // Initial conversion if both baseAmount and selectedCurrency are set
     if (baseAmount.value > 0 && selectedCurrency.value.isNotEmpty) {
       convertCurrency();
     }

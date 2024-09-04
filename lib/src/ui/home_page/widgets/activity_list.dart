@@ -48,7 +48,7 @@ class ActivityList extends GetView<HomeController> {
           transactionWidgets.addAll(
             transactions.map((transaction) {
               return Dismissible(
-                key: Key(transaction.id), // Use o id como chave
+                key: Key(transaction.id),
                 direction: DismissDirection.endToStart,
                 onDismissed: (direction) {
                   controller.deleteTransaction(transaction.id);
