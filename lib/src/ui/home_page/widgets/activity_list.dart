@@ -27,15 +27,20 @@ class ActivityList extends GetView<HomeController> {
 
         final List<Widget> transactionWidgets = [];
         groupedTransactions.forEach((date, transactions) {
+          const TextStyle headerStyle = TextStyle(
+            fontSize: 16.0,
+            fontWeight: FontWeight.bold,
+            color: AppColors.blackScale4,
+          );
+
           transactionWidgets.add(
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8.0),
+            Container(
+              width: double.infinity,
+              color: AppColors.primaryBackground,
+              padding: const EdgeInsets.all(8.0),
               child: Text(
                 date,
-                style: const TextStyle(
-                  fontSize: 16.0,
-                  fontWeight: FontWeight.bold,
-                ),
+                style: headerStyle,
               ),
             ),
           );
@@ -43,16 +48,13 @@ class ActivityList extends GetView<HomeController> {
           transactionWidgets.addAll(
             transactions.map((transaction) {
               return Dismissible(
-                key: Key(transaction.date.toIso8601String()),
+                key: Key(transaction.id), // Use o id como chave
                 direction: DismissDirection.endToStart,
                 onDismissed: (direction) {
-                  final index = transactions.indexOf(transaction);
-                  if (index != -1) {
-                    controller.deleteTransaction(index);
-                  }
+                  controller.deleteTransaction(transaction.id);
                 },
                 background: Container(
-                  color: Colors.red,
+                  color: AppColors.warning,
                   child: const Align(
                     alignment: Alignment.centerLeft,
                     child: Padding(
@@ -60,7 +62,7 @@ class ActivityList extends GetView<HomeController> {
                       child: Text(
                         'Delete',
                         style: TextStyle(
-                          color: Colors.white,
+                          color: AppColors.secondaryColor,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -73,35 +75,34 @@ class ActivityList extends GetView<HomeController> {
           );
         });
 
-        return SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(height: 80.0),
-              const Text(
-                'Recent Activity',
-                style: TextStyle(
-                  fontSize: 14.0,
-                  fontWeight: FontWeight.bold,
-                ),
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const SizedBox(height: 80.0),
+            const Text(
+              'Recent Activity',
+              style: TextStyle(
+                fontSize: 14.0,
+                fontWeight: FontWeight.bold,
               ),
-              const SizedBox(height: 16.0),
-              Container(
+            ).marginOnly(left: 8, bottom: 16),
+            Expanded(
+              child: Container(
                 color: AppColors.secondaryColor,
-                child: ListView(
-                  padding: const EdgeInsets.all(16.0),
-                  shrinkWrap: true,
-                  children: transactionWidgets.isEmpty
-                      ? [
-                          const Center(
-                            child: Text('No transactions available'),
-                          ),
-                        ]
-                      : transactionWidgets,
-                ),
+                child: transactionWidgets.isEmpty
+                    ? const Center(
+                        child: Text('No transactions yet!'),
+                      )
+                    : ListView.builder(
+                        padding: const EdgeInsets.all(0.0),
+                        itemCount: transactionWidgets.length,
+                        itemBuilder: (context, index) {
+                          return transactionWidgets[index];
+                        },
+                      ),
               ),
-            ],
-          ),
+            ),
+          ],
         ).marginOnly(bottom: 16);
       }),
     );

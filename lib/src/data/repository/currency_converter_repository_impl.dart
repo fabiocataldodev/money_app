@@ -1,6 +1,5 @@
 import 'package:money_app/src/data/models/currency_converer_model.dart';
-
-import './currency_converter_repository.dart';
+import 'package:money_app/src/data/repository/currency_converter_repository.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 

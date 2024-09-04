@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:money_app/src/app_config/colors/app_colors.dart';
 
 class CustomCurrencyText extends StatelessWidget {
   final double amount;
@@ -25,7 +26,7 @@ class CustomCurrencyText extends StatelessWidget {
     return RichText(
       text: TextSpan(
         style: const TextStyle(
-          color: Colors.white,
+          color: AppColors.secondaryColor,
           fontWeight: FontWeight.bold,
         ),
         children: [

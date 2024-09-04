@@ -1,21 +1,26 @@
 import 'package:intl/intl.dart';
 
 class FormatUtils {
-  static String formatAmount(dynamic amount) {
+  static Map<String, String> formatAmount(dynamic amount) {
     try {
-      final NumberFormat amountFormatter = NumberFormat('#,##0.00', 'en_US');
+      final NumberFormat amountFormatter = NumberFormat('#,##0.00', 'en_UK');
+      String formattedAmount;
 
       if (amount is String) {
-        return amountFormatter.format(double.parse(amount));
+        formattedAmount = amountFormatter.format(double.parse(amount));
+      } else if (amount is double) {
+        formattedAmount = amountFormatter.format(amount);
+      } else {
+        throw const FormatException('Invalid amount format');
       }
 
-      if (amount is double) {
-        return amountFormatter.format(amount);
-      }
-
-      throw const FormatException('Invalid amount format');
+      final parts = formattedAmount.split('.');
+      return {
+        'integer': parts[0],
+        'decimal': parts.length > 1 ? '.${parts[1]}' : '',
+      };
     } catch (e) {
-      return '0.00';
+      return {'integer': '0', 'decimal': '.00'};
     }
   }
 
@@ -32,7 +37,8 @@ class FormatUtils {
         date.day == yesterday.day) {
       return 'Yesterday';
     } else {
-      return '${date.day.toString().padLeft(2, '0')}/${date.month.toString().padLeft(2, '0')}/${date.year}';
+      final DateFormat formatter = DateFormat('d MMMM');
+      return formatter.format(date);
     }
   }
 }

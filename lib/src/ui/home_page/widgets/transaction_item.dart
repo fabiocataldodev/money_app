@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:money_app/src/app_config/colors/app_colors.dart';
 import 'package:money_app/src/data/models/transaction_model.dart';
 import 'package:money_app/src/utils/format_utils.dart';
 
@@ -18,23 +19,24 @@ class TransactionItem extends StatelessWidget {
     switch (transaction.type) {
       case TransactionType.purchase:
         icon = Icons.shopping_cart;
-        amountColor = Colors.black;
+        amountColor = AppColors.blackScale1;
         break;
       case TransactionType.topup:
         icon = Icons.add_circle;
-        amountColor = Colors.green;
+        amountColor = AppColors.primaryColor;
         break;
     }
 
-    final String formattedAmount = FormatUtils.formatAmount(transaction.amount);
+    final Map<String, String> formattedAmount =
+        FormatUtils.formatAmount(transaction.amount);
 
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      padding: const EdgeInsets.only(right: 16, left: 16, top: 8, bottom: 8),
       child: Row(
         children: [
           Icon(
             icon,
-            color: Colors.purple,
+            color: AppColors.primaryColor,
             size: 32.0,
           ),
           const SizedBox(width: 16.0),
@@ -52,13 +54,26 @@ class TransactionItem extends StatelessWidget {
               ],
             ),
           ),
-          Text(
-            transaction.type == TransactionType.topup
-                ? '+$formattedAmount'
-                : '£$formattedAmount',
-            style: TextStyle(
-              fontSize: 18.0,
-              color: amountColor,
+          Text.rich(
+            TextSpan(
+              children: [
+                TextSpan(
+                  text: transaction.type == TransactionType.topup
+                      ? '+ £${formattedAmount['integer']}'
+                      : '£${formattedAmount['integer']}',
+                  style: TextStyle(
+                    fontSize: 18.0,
+                    color: amountColor,
+                  ),
+                ),
+                TextSpan(
+                  text: formattedAmount['decimal'],
+                  style: TextStyle(
+                    fontSize: 14.0,
+                    color: amountColor,
+                  ),
+                ),
+              ],
             ),
           ),
         ],

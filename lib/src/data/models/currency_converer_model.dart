@@ -34,7 +34,9 @@ class CurrencyConverterModel {
       timeNextUpdateUnix: json['time_next_update_unix'],
       timeNextUpdateUtc: json['time_next_update_utc'],
       baseCode: json['base_code'],
-      rates: Map<String, double>.from(json['rates']),
+      rates: (json['rates'] as Map<String, dynamic>).map(
+        (key, value) => MapEntry(key, (value as num).toDouble()),
+      ),
     );
   }
 }

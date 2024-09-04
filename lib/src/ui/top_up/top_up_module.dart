@@ -7,7 +7,7 @@ class TopUpModule implements Module {
   @override
   List<GetPage> routers = [
     GetPage(
-      name: '/homepage',
+      name: '/topUpPage',
       page: () => const TopUpPage(),
       binding: TopUpBindings(),
     ),

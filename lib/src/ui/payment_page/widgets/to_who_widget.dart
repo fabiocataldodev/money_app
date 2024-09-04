@@ -62,26 +62,27 @@ class ToWhoWidget extends GetView<PaymentController> {
                 decoration: const InputDecoration(
                   border: UnderlineInputBorder(
                     borderSide: BorderSide(
-                      color: Colors.white,
+                      color: AppColors.secondaryColor,
                       width: 2.0,
                     ),
                   ),
                   focusedBorder: UnderlineInputBorder(
                     borderSide: BorderSide(
-                      color: Colors.white,
+                      color: AppColors.secondaryColor,
                       width: 2.0,
                     ),
                   ),
                   enabledBorder: UnderlineInputBorder(
                     borderSide: BorderSide(
-                      color: Colors.white,
+                      color: AppColors.secondaryColor,
                       width: 2.0,
                     ),
                   ),
                 ),
                 style: const TextStyle(
-                  color: Colors.white,
-                ),
+                    color: AppColors.secondaryColor,
+                    fontSize: 18,
+                    fontWeight: FontWeight.w500),
                 onChanged: (value) {
                   controller.toWho.value = value;
                 },
@@ -114,7 +115,7 @@ class ToWhoWidget extends GetView<PaymentController> {
                   controller.amount.value = '0.00';
                   controller.toWho.value = '';
 
-                  Get.offAndToNamed('/');
+                  Get.offAllNamed('/');
                 },
               ),
             ],

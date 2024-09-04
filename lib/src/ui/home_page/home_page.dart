@@ -12,6 +12,7 @@ class HomePage extends GetView<HomeController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: const Text(
           'MoneyApp',
           style: TextStyle(
@@ -20,17 +21,18 @@ class HomePage extends GetView<HomeController> {
           ),
         ),
         actions: [
-          IconButton(
-            icon: const Icon(
-              Icons.currency_exchange,
-              color: AppColors.secondaryColor,
-              size: 24,
+          GestureDetector(
+            onTap: controller.onIconPressed,
+            onLongPress: controller.onIconLongPress,
+            child: Container(
+              margin: const EdgeInsets.only(right: 16.0),
+              child: const Icon(
+                Icons.currency_exchange,
+                color: AppColors.secondaryColor,
+                size: 24,
+              ),
             ),
-            onPressed: () {
-              // controller.addSampleTransactions();
-              // Get.to(() => const CurrencyConverterPage());
-            },
-          ).marginOnly(right: 16),
+          ),
         ],
       ),
       backgroundColor: AppColors.primaryBackground,
@@ -71,7 +73,7 @@ class HomePage extends GetView<HomeController> {
                 borderRadius: BorderRadius.circular(16.0),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withOpacity(0.2),
+                    color: AppColors.blackScale1.withOpacity(0.2),
                     spreadRadius: 2,
                     blurRadius: 6,
                     offset: const Offset(0, 3),
@@ -94,27 +96,30 @@ class HomePage extends GetView<HomeController> {
                           'Pay',
                           style: TextStyle(
                             fontSize: 14.0,
-                            color: Colors.black,
+                            color: AppColors.blackScale1,
                           ),
                         ),
                       ],
                     ),
                   ),
-                  Column(
-                    children: [
-                      Image.asset(
-                        'assets/wallet_icon.png',
-                        width: 60.0,
-                        height: 60.0,
-                      ),
-                      const Text(
-                        'Top up',
-                        style: TextStyle(
-                          fontSize: 14.0,
-                          color: Colors.black,
+                  GestureDetector(
+                    onTap: () => Get.toNamed('/topUpPage'),
+                    child: Column(
+                      children: [
+                        Image.asset(
+                          'assets/wallet_icon.png',
+                          width: 60.0,
+                          height: 60.0,
                         ),
-                      ),
-                    ],
+                        const Text(
+                          'Top up',
+                          style: TextStyle(
+                            fontSize: 14.0,
+                            color: AppColors.blackScale1,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),

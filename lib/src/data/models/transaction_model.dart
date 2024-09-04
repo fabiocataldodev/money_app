@@ -1,19 +1,29 @@
+import 'package:uuid/uuid.dart';
+
+enum TransactionType {
+  purchase,
+  topup,
+}
+
 class TransactionModel {
+  final String id;
   final TransactionType type;
   final String title;
   final String amount;
   final DateTime date;
 
   TransactionModel({
+    String? id,
     required this.type,
     required this.title,
     required this.amount,
     required this.date,
-  });
+  }) : id = id ?? const Uuid().v4();
 
   Map<String, dynamic> toMap() {
     return {
-      'type': type.toString(),
+      'id': id,
+      'type': type.index,
       'title': title,
       'amount': amount,
       'date': date.toIso8601String(),
@@ -22,16 +32,11 @@ class TransactionModel {
 
   factory TransactionModel.fromMap(Map<String, dynamic> map) {
     return TransactionModel(
-      type:
-          TransactionType.values.firstWhere((e) => e.toString() == map['type']),
+      id: map['id'],
+      type: TransactionType.values[map['type']],
       title: map['title'],
       amount: map['amount'],
       date: DateTime.parse(map['date']),
     );
   }
-}
-
-enum TransactionType {
-  purchase,
-  topup,
 }
