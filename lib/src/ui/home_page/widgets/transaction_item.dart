@@ -59,7 +59,7 @@ class TransactionItem extends StatelessWidget {
               children: [
                 TextSpan(
                   text: transaction.type == TransactionType.topup
-                      ? '+ £${formattedAmount['integer']}'
+                      ? '+£${formattedAmount['integer']}'
                       : '£${formattedAmount['integer']}',
                   style: TextStyle(
                     fontSize: 18.0,
